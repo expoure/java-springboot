@@ -1,0 +1,25 @@
+version: "3.8"
+
+networks:
+  park-net:
+    external: true
+
+services:
+  postgres-parking:
+    image: postgres:13
+    hostname: postgres-parking
+    container_name: postgres-parking
+    restart: always
+    networks:
+      - park-net
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=pass
+      - POSTGRES_DB=db
+    tty: true
+    volumes:
+      - ./.docker/pg-data:/var/lib/postgresql/data
+      - ./.docker:/docker-entrypoint-initdb.d/
+
